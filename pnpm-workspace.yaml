@@ -2,3 +2,6 @@ packages:
   - api
   - shared
   - ui
+allowBuilds:
+  sharp: true
+  unrs-resolver: true
