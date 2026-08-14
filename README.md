@@ -1,4 +1,4 @@
-# Software Developer Interview Challenge
+# tiQtoQ Software Developer Interview Challenge
 
 Build a **Change Risk Analyser**: a small application that helps a development team understand the testing risk associated with a proposed software change.
 
