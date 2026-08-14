@@ -55,6 +55,7 @@ Your solution should:
 
 - Use **TypeScript**
 - Use **Next.js**
+- Use a standalone API in **TypeScript** (not NextJS API Routes)
 - Accept a description of a software change
 - Analyse the change
 - Present the result clearly to the user
