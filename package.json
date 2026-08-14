@@ -1,0 +1,18 @@
+{
+  "name": "dev-interview-challenge",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.18.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @dev-interview-challenge/ui dev",
+    "build": "pnpm --filter @dev-interview-challenge/ui build",
+    "lint": "pnpm --filter @dev-interview-challenge/ui lint",
+    "typecheck": "pnpm --filter @dev-interview-challenge/ui typecheck"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2"
+  }
+}

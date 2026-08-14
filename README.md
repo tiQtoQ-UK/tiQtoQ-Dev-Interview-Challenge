@@ -1,192 +1,75 @@
 # Software Developer Interview Challenge
 
-The tiQtoQ Software Developer Recruitment Challenge
+Build a **Change Risk Analyser**: a small application that helps a development team understand the testing risk associated with a proposed software change.
 
-## Scenario
+The starter repository is ready to run. It deliberately provides a UI starting point while leaving the API framework, contracts, analysis mechanism, and implementation choices to you.
 
-We build platforms that help software teams integrate AI throughout the Software Development Lifecycle.
+## Get started
 
-Your challenge is to add a small feature to an existing Next.js application that helps a development team understand the **testing risk associated with a software change**.
+### Prerequisites
 
-You should aim to spend approximately **1–2 hours** on the challenge.
+- [Node.js 22 LTS](https://nodejs.org/) or later
+- Git
 
----
+The repository pins its `pnpm` version. Corepack, included with supported Node.js releases, will use it automatically.
 
-## The Feature
+```powershell
+git clone https://github.com/<your-github-user>/Dev-Interview-Challenge.git
+Set-Location Dev-Interview-Challenge
+corepack enable
+pnpm install
+pnpm dev
+```
 
-Build a **Change Risk Analyser**.
+Open [http://localhost:3000](http://localhost:3000). The Change Risk Analyser page is the UI integration point for your work.
 
-A user should be able to enter a description of a proposed software change, for example:
+## Workspace layout
 
-> Add the ability for administrators to reset another user's MFA configuration.
+```
+apps/
+  ui/       Next.js TypeScript UI starter
+  api/      TypeScript API workspace — choose and add your own framework
+packages/
+  shared/   Empty TypeScript workspace for contracts or reusable code you choose to share
+```
 
-Your application should analyse the change and present useful information back to the development team.
+`apps/api` intentionally has no source files, HTTP framework, routes, or dependencies. `packages/shared` intentionally has no contracts or validation. Define those boundaries as part of your solution; do not use Next.js API routes for the backend.
 
-At a minimum, display:
+## The challenge
 
-- **Risk Level:** Low / Medium / High
-- **Areas potentially impacted**
-- **Recommended testing activities**
+Spend approximately **1–2 hours** adding a feature that accepts a description of a proposed software change and presents a useful analysis to the development team.
 
 For example:
 
-### Risk
-**High**
+> Add the ability for administrators to reset another user's MFA configuration.
 
-### Impacted Areas
-- Authentication
-- User permissions
-- Audit logging
-- Security
+At a minimum, display:
 
-### Recommended Testing
-- Verify only authorised administrators can reset MFA.
-- Verify existing MFA users continue to authenticate successfully.
-- Verify the reset action is recorded in the audit log.
-- Verify users cannot reset another user's MFA through the API without permission.
+- a risk level: Low, Medium, or High;
+- areas potentially impacted; and
+- recommended testing activities.
 
----
+Your solution must use TypeScript, Next.js, and a standalone TypeScript API. The analysis may use deterministic logic, an AI model, or both. AI is optional.
 
-# Requirements
+The supplied UI is static on purpose: connect its action to your API and replace the empty assessment states with your result. It is not a partial solution to the challenge.
 
-## Required
+## Useful commands
 
-Your solution should:
+```powershell
+pnpm dev        # start the Next.js UI
+pnpm typecheck  # type-check the UI
+pnpm lint       # lint the UI
+pnpm build      # create a production UI build
+```
 
-- Use **TypeScript**
-- Use **Next.js**
-- Use a standalone API in **TypeScript** (not NextJS API Routes)
-- Accept a description of a software change
-- Analyse the change
-- Present the result clearly to the user
-- Be structured in a way that could reasonably be extended in a production application
+Add API and shared-package commands as your design requires. Update the root commands if your finished solution needs to run the UI and API together.
 
-The analysis mechanism is deliberately left open to you.
+## What we value
 
-You may use:
+We assess engineering judgement more than feature quantity. Prioritise clear TypeScript, separation of concerns, appropriate error handling, and highly testable business logic. A small, well-tested solution is preferable to a large feature that is hard to understand or verify.
 
-- deterministic application logic
-- an AI model
-- a combination of both
+AI is not required. If you use it, treat it as an external, non-deterministic dependency: make the provider replaceable, validate its output before use, and handle malformed responses or failures deliberately.
 
-We are more interested in your engineering decisions than the visual design of the application.
+## Submission
 
----
-
-# Things We Value
-
-There isn't one correct implementation.
-
-We will particularly look at the following areas.
-
-## Software Design
-
-We'd like to see code that demonstrates:
-
-- clear separation of concerns
-- sensible abstractions
-- readable TypeScript
-- appropriate error handling
-- components/classes/functions with clear responsibilities
-
-Avoid unnecessary complexity — this is a small feature.
-
----
-
-## Testability
-
-We place a strong emphasis on automated testing.
-
-Consider:
-
-- how easily your business logic can be tested
-- whether external dependencies can be replaced or mocked
-- appropriate unit/component/integration tests
-- testing behaviour rather than implementation details
-
-You won't lose marks for not achieving exhaustive coverage within the time available.
-
-We'd rather see **a small amount of well-designed, highly testable code** than a large feature that is difficult to test.
-
----
-
-## AI
-
-AI is **not required** to complete the challenge successfully.
-
-However, additional credit will be given where AI is used effectively.
-
-Examples include:
-
-- using Microsoft Foundry or another LLM to perform the change analysis
-- designing the application so that the AI provider/model can easily be replaced
-- validating or transforming LLM output before it enters the application
-- handling malformed or failed AI responses
-- combining deterministic logic with AI rather than simply displaying raw model output
-
-We are particularly interested in seeing AI treated as an **external, non-deterministic dependency** rather than ordinary application logic.
-
----
-
-# Bonus Ideas
-
-If you have time, you could implement one or more of the following:
-
-- Generate suggested test cases using AI
-- Categorise tests as Unit / Integration / API / UI
-- Identify security or accessibility concerns
-- Allow the user to regenerate recommendations
-- Show why the change was given its risk rating
-- Return structured AI output rather than free-form text
-- Add observability around AI requests
-- Add an abstraction allowing different AI models to be selected
-- Deploy the application to Azure
-
-These are deliberately optional.
-
-**Do not sacrifice code quality to implement bonus functionality.**
-
----
-
-# What To Submit
-
-Please provide:
-
-- Your source code
-- Instructions for running the application
-- Any assumptions you made
-- A short explanation of anything you would change or improve given more time
-
-Be prepared to spend a few minutes talking us through:
-
-- your architecture
-- your testing approach
-- your use of AI, if applicable
-- trade-offs you made because of the time constraint
-
----
-
-# Assessment Guide
-
-The exercise is assessed primarily on engineering judgement rather than feature quantity.
-
-| Area | Weight |
-|---|---:|
-| Code quality & TypeScript | 20% |
-| Software design | 20% |
-| Testability & automated tests | 25% |
-| Feature implementation | 15% |
-| Engineering judgement | 10% |
-| AI integration | 10% |
-
-## Exceptional Signals
-
-Additional credit should be considered where a candidate demonstrates:
-
-- dependency inversion around the AI/model implementation
-- schema validation of AI responses
-- deterministic tests despite using AI
-- thoughtful separation between domain logic and infrastructure
-- sensible handling of failure, latency or malformed responses
-- observability or useful telemetry
-- effective use of AI during their own development process
+Please provide your source code, running instructions, assumptions, and a short note on what you would improve with more time. Be ready to discuss your architecture, testing approach, AI usage (if any), and time-based trade-offs.
