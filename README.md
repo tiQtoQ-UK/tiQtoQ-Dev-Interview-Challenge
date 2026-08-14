@@ -181,7 +181,7 @@ These are deliberately optional.
 
 ## Submission
 
-Please provide your source code by opening a PR to the repo you forked from.
+Please provide your source code by opening a PR to your Forked PR and adding `@chrisusher-tt` as the reviewer.
 
 Please document running instructions, assumptions, and a short note on what you would improve with more time. 
 
