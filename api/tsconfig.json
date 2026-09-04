@@ -2,7 +2,13 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "lib": ["es2022"],
+    "types": ["node"],
+    "paths": {
+      "@dev-interview-challenge/shared": ["../shared/src/index.ts"],
+      "@dev-interview-challenge/shared/types": ["../shared/types/index.ts"]
+    }
   },
-  "include": []
+  "include": ["src/**/*.ts"]
 }

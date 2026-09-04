@@ -142,8 +142,10 @@ The supplied UI is static on purpose: connect its action to your API and replace
 ## Useful commands
 
 ```powershell
-pnpm dev        # start the Next.js UI
-pnpm typecheck  # type-check the UI
+pnpm dev        # start the Next.js UI and standalone API
+pnpm dev:ui     # start only the Next.js UI
+pnpm dev:api    # start only the standalone API
+pnpm typecheck  # type-check all workspaces
 pnpm lint       # lint the UI
 pnpm build      # create a production UI build
 ```
@@ -186,3 +188,29 @@ Please provide your source code by opening a PR to your Forked PR and adding `@c
 Please document running instructions, assumptions, and a short note on what you would improve with more time. 
 
 Be ready to discuss your architecture, testing approach, AI usage (if any), and time-based trade-offs.
+
+---
+
+## Implemented Solution Notes
+
+The Change Risk Analyser is implemented with deterministic TypeScript rules rather than an AI provider. This keeps the app self-contained for the interview exercise, makes the output repeatable, and avoids needing API keys or model-specific error handling.
+
+### Architecture
+
+- `shared/src/index.ts` contains the shared request/response contracts and the risk analysis logic.
+- `api/src/server.ts` exposes a standalone Express API with `POST /analyse-change` and `GET /health`.
+- `ui/app/change-risk-analyser.tsx` contains the client-side form, API call, loading state, error state, and structured result rendering.
+
+By default the UI calls `http://localhost:4000`. Override this with `NEXT_PUBLIC_API_BASE_URL` if the API runs elsewhere. The API allows requests from `http://localhost:3000` by default; override this with `UI_ORIGIN`.
+
+### Assumptions
+
+- Risk is inferred from keywords that indicate sensitive domains such as authentication, authorisation, data persistence, billing, public APIs, audit logging, UI, notifications, and configuration.
+- Security-sensitive or cross-boundary changes should trend toward Medium or High risk.
+- The analysis is advisory and should be reviewed against the actual implementation plan.
+
+### With More Time
+
+- Add focused unit tests around the scoring rules and API validation.
+- Add categories for recommended tests such as Unit, Integration, API, and UI.
+- Add an optional AI-backed analyser behind the same shared contract, with validated structured output and deterministic fallback behaviour.

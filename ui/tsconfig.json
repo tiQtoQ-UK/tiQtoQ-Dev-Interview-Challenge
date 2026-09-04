@@ -7,6 +7,10 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "jsx": "preserve",
+    "paths": {
+      "@dev-interview-challenge/shared": ["../shared/src/index.ts"],
+      "@dev-interview-challenge/shared/types": ["../shared/types/index.ts"]
+    },
     "plugins": [
       {
         "name": "next"

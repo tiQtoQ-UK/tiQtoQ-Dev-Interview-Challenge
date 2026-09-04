@@ -7,10 +7,12 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "dev": "pnpm --filter @dev-interview-challenge/ui dev",
+    "dev": "pnpm --parallel --stream --filter @dev-interview-challenge/api --filter @dev-interview-challenge/ui dev",
+    "dev:ui": "pnpm --filter @dev-interview-challenge/ui dev",
+    "dev:api": "pnpm --filter @dev-interview-challenge/api dev",
     "build": "pnpm --filter @dev-interview-challenge/ui build",
     "lint": "pnpm --filter @dev-interview-challenge/ui lint",
-    "typecheck": "pnpm --filter @dev-interview-challenge/ui typecheck"
+    "typecheck": "pnpm -r typecheck"
   },
   "devDependencies": {
     "typescript": "5.9.2"

@@ -1,3 +1,5 @@
+import { ChangeRiskAnalyser } from "./change-risk-analyser";
+
 export default function Home() {
   return (
     <main className="page-shell">
@@ -8,6 +10,8 @@ export default function Home() {
           Help a software team understand the testing risk associated with a proposed change.
         </p>
       </section>
+
+      <ChangeRiskAnalyser />
     </main>
   );
 }

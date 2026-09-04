@@ -1,5 +1,19 @@
 {
   "name": "@dev-interview-challenge/api",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --experimental-strip-types src/server.ts",
+    "start": "node --experimental-strip-types src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dev-interview-challenge/shared": "workspace:*",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.20.1"
+  }
 }
