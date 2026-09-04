@@ -1,53 +1,31 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
-import type { ChangeRiskAnalysis, ChangeRiskResponse, RiskLevel } from "@dev-interview-challenge/shared/types";
+import { FormEvent, useState } from "react";
+import type { ChangeRiskAnalysis, RiskLevel } from "@dev-interview-challenge/shared/types";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000";
+import { analyseChange, setAnalysisError } from "./store/analyseChangeSlice";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
+
 const EXAMPLE_DESCRIPTION = "Add the ability for administrators to reset another user's MFA configuration.";
 
 export function ChangeRiskAnalyser() {
   const [description, setDescription] = useState(EXAMPLE_DESCRIPTION);
-  const [analysis, setAnalysis] = useState<ChangeRiskAnalysis | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useAppDispatch();
+  const { analysis, error, status } = useAppSelector((state) => state.analyseChange);
 
   const trimmedDescription = description.trim();
+  const isSubmitting = status === "loading";
   const canSubmit = trimmedDescription.length > 0 && !isSubmitting;
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!trimmedDescription) {
-      setError("Enter a change description before analysing risk.");
+      dispatch(setAnalysisError("Enter a change description before analysing risk."));
       return;
     }
 
-    setIsSubmitting(true);
-    setError(null);
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/analyse-change`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ description: trimmedDescription })
-      });
-
-      const payload = (await response.json()) as Partial<ChangeRiskResponse> & { error?: string };
-
-      if (!response.ok || !payload.analysis) {
-        throw new Error(payload.error ?? "The API returned an unexpected response.");
-      }
-
-      setAnalysis(payload.analysis);
-    } catch (caughtError) {
-      setAnalysis(null);
-      setError(caughtError instanceof Error ? caughtError.message : "Unable to analyse the change.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    void dispatch(analyseChange({ description: trimmedDescription }));
   }
 
   return (
@@ -122,7 +100,7 @@ function AnalysisResults({ analysis, isSubmitting }: { analysis: ChangeRiskAnaly
 }
 
 function RiskBadge({ riskLevel }: { riskLevel: RiskLevel }) {
-  const className = useMemo(() => `risk-badge risk-badge--${riskLevel.toLowerCase()}`, [riskLevel]);
+  const className = `risk-badge risk-badge--${riskLevel.toLowerCase()}`;
 
   return (
     <div className="risk-summary">
