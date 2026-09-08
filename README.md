@@ -12,6 +12,24 @@ You should aim to spend approximately **1–2 hours** on the challenge.
 
 ---
 
+## Start here: Fork this repository
+
+All activity for this challenge **MUST** happen in a fork of this public repository on your own GitHub account.
+
+1. Fork this repository to your own GitHub account using the **Fork** button on GitHub.
+2. Clone your fork locally and make all changes and commits in that fork.
+3. Do not commit directly to the original repository. The original repository should only be used as the source for your fork and the destination for your final pull request.
+
+Use your own fork URL in the commands below:
+
+```powershell
+git clone https://github.com/<your-github-user>/tiQtoQ-Dev-Interview-Challenge.git
+Set-Location tiQtoQ-Dev-Interview-Challenge
+git remote add upstream https://github.com/tiQtoQ-UK/tiQtoQ-Dev-Interview-Challenge.git
+```
+
+The `upstream` remote is optional, but can be used to retrieve updates from the original repository if needed. Push your work to `origin`, which must be your fork.
+
 ## The Feature
 
 Build a **Change Risk Analyser**.
@@ -102,8 +120,6 @@ Avoid unnecessary complexity — this is a small feature.
 The repository pins its `pnpm` version. Corepack, included with supported Node.js releases, will use it automatically.
 
 ```powershell
-git clone https://github.com/<your-github-user>/Dev-Interview-Challenge.git
-Set-Location Dev-Interview-Challenge
 corepack enable
 pnpm install
 pnpm dev
@@ -181,7 +197,7 @@ These are deliberately optional.
 
 ## Submission
 
-Please provide your source code by opening a PR to your Forked PR and adding `@chrisusher-tt` as the reviewer.
+Push your completed source code and commits to your fork, then open a pull request **from your fork to the original repository**. Add `@chrisusher-tt` as the reviewer.
 
 Please document running instructions, assumptions, and a short note on what you would improve with more time. 
 
