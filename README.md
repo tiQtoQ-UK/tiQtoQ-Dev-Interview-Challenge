@@ -12,24 +12,6 @@ You should aim to spend approximately **1–2 hours** on the challenge.
 
 ---
 
-## Start here: Fork this repository
-
-All activity for this challenge **MUST** happen in a fork of this public repository on your own GitHub account.
-
-1. Fork this repository to your own GitHub account using the **Fork** button on GitHub.
-2. Clone your fork locally and make all changes and commits in that fork.
-3. Do not commit directly to the original repository. The original repository should only be used as the source for your fork and the destination for your final pull request.
-
-Use your own fork URL in the commands below:
-
-```powershell
-git clone https://github.com/<your-github-user>/tiQtoQ-Dev-Interview-Challenge.git
-Set-Location tiQtoQ-Dev-Interview-Challenge
-git remote add upstream https://github.com/tiQtoQ-UK/tiQtoQ-Dev-Interview-Challenge.git
-```
-
-The `upstream` remote is optional, but can be used to retrieve updates from the original repository if needed. Push your work to `origin`, which must be your fork.
-
 ## The Feature
 
 Build a **Change Risk Analyser**.
@@ -49,15 +31,18 @@ At a minimum, display:
 For example:
 
 ### Risk
+
 **High**
 
 ### Impacted Areas
+
 - Authentication
 - User permissions
 - Audit logging
 - Security
 
 ### Recommended Testing
+
 - Verify only authorised administrators can reset MFA.
 - Verify existing MFA users continue to authenticate successfully.
 - Verify the reset action is recorded in the audit log.
@@ -120,6 +105,8 @@ Avoid unnecessary complexity — this is a small feature.
 The repository pins its `pnpm` version. Corepack, included with supported Node.js releases, will use it automatically.
 
 ```powershell
+git clone https://github.com/<your-github-user>/Dev-Interview-Challenge.git
+Set-Location Dev-Interview-Challenge
 corepack enable
 pnpm install
 pnpm dev
@@ -158,8 +145,10 @@ The supplied UI is static on purpose: connect its action to your API and replace
 ## Useful commands
 
 ```powershell
-pnpm dev        # start the Next.js UI
-pnpm typecheck  # type-check the UI
+pnpm dev        # start the Next.js UI and standalone API
+pnpm dev:ui     # start only the Next.js UI
+pnpm dev:api    # start only the standalone API
+pnpm typecheck  # type-check all workspaces
 pnpm lint       # lint the UI
 pnpm build      # create a production UI build
 ```
@@ -197,8 +186,34 @@ These are deliberately optional.
 
 ## Submission
 
-Push your completed source code and commits to your fork, then open a pull request **from your fork to the original repository**. Add `@chrisusher-tt` as the reviewer.
+Please provide your source code by opening a PR to your Forked PR and adding `@chrisusher-tt` as the reviewer.
 
-Please document running instructions, assumptions, and a short note on what you would improve with more time. 
+Please document running instructions, assumptions, and a short note on what you would improve with more time.
 
 Be ready to discuss your architecture, testing approach, AI usage (if any), and time-based trade-offs.
+
+---
+
+## Implemented Solution Notes
+
+The Change Risk Analyser is implemented with deterministic TypeScript rules rather than an AI provider. This keeps the app self-contained for the interview exercise, makes the output repeatable, and avoids needing API keys or model-specific error handling.
+
+### Architecture
+
+- `shared/src/index.ts` contains the shared request/response contracts and the risk analysis logic.
+- `api/src/server.ts` exposes a standalone Express API with `POST /analyse-change` and `GET /health`.
+- `ui/app/change-risk-analyser.tsx` contains the client-side form, API call, loading state, error state, and structured result rendering.
+
+By default the UI calls `http://localhost:4000`. Override this with `NEXT_PUBLIC_API_BASE_URL` if the API runs elsewhere. The API allows requests from `http://localhost:3000` by default; override this with `UI_ORIGIN`.
+
+### Assumptions
+
+- Risk is inferred from keywords that indicate sensitive domains such as authentication, authorisation, data persistence, billing, public APIs, audit logging, UI, notifications, and configuration.
+- Security-sensitive or cross-boundary changes should trend toward Medium or High risk.
+- The analysis is advisory and should be reviewed against the actual implementation plan.
+
+### With More Time
+
+- Add focused unit tests around the scoring rules and API validation.
+- Add categories for recommended tests such as Unit, Integration, API, and UI.
+- Add an optional AI-backed analyser behind the same shared contract, with validated structured output and deterministic fallback behaviour.
