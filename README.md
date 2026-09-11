@@ -18,7 +18,7 @@ All activity for this challenge **MUST** happen in a fork of this public reposit
 
 1. Fork this repository to your own GitHub account using the **Fork** button on GitHub.
 2. Clone your fork locally and make all changes and commits in that fork.
-3. Do not commit directly to the original repository. The original repository should only be used as the source for your fork and the destination for your final pull request.
+3. Do not commit directly to the original repository. The original repository should only be used as the source for your fork with your final submission being a pull request on your forked repository.
 
 Use your own fork URL in the commands below:
 
@@ -197,7 +197,7 @@ These are deliberately optional.
 
 ## Submission
 
-Push your completed source code and commits to your fork, then open a pull request **from your fork to the original repository**. Add `@chrisusher-tt` as the reviewer.
+Push your completed source code and commits to your fork, then open a pull request **on your forked repository**. Add `@chrisusher-tt` as the reviewer.
 
 Please document running instructions, assumptions, and a short note on what you would improve with more time. 
 
